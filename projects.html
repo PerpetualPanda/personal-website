@@ -1,0 +1,398 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Hey, I'm Joe. I'm studying Computer Science at UC Berkeley. Welcome to my personal website!">
+    <meta name="author" content="Joe Mo (PPanda)">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/icons/favicon.png">
+
+    <title>Joe Mo - Projects</title>
+</head>
+
+<body>
+
+    <!-- Polygonal Banner -->
+    <div class="page-header">
+        <!-- About Card -->
+        <div class="container">
+            <div class="card shadow-lg bg-transparent rounded" id="terminal-shadow">
+                <!-- About Card Title Bar -->
+                <div class="card-footer w-100 text-muted" id="terminal-titlebar">
+                    <img src="assets/img/header/window-buttons.png" id="terminal-buttons">
+                    <p id="terminal-titletext"></p>
+                </div>
+                <!-- About Card Body -->
+                <div class="row no-gutters" id="terminal-body">
+                    <!-- About Card Picture -->
+                    <div class="col-auto">
+                        <img width="200px" src="assets/img/header/profile-picture.jpg" alt="Profile Picture" id="terminal-profilepic">
+                    </div>
+                    <!-- About Card Description -->
+                    <div class="col">
+                        <div class="card-block px-2">
+                            <div class="container" id="terminal-textcontainer">
+                                <h4 class="card-title terminal-bodytext">Yuzhou "Joe" Mo</h4>
+                                <br>
+                                <p class="card-text terminal-bodytext">Computer Science Student at UC Berkeley</p>
+                                <p class="card-text terminal-bodytext">Contact: yuzhoumo@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sets terminal theme about card title on window resize -->
+    <script>
+        function renderTerminal() {
+            var x = document.getElementById("terminal-body").offsetWidth;
+            var y = document.getElementById("terminal-body").offsetHeight;
+            if (x >= 486) {
+                document.getElementById("terminal-titletext").innerHTML = 'bash -- server@berkeley.edu: - ' + x + 'x' + y;
+                document.getElementById("terminal-profilepic").style.width = '200px';
+            } else {
+                document.getElementById("terminal-titletext").innerHTML = 'bash - ' + x + 'x' + y;
+                document.getElementById("terminal-profilepic").style.width = '100%';
+            }
+        }
+
+        window.onresize = function(event) {
+            renderTerminal();
+        };
+
+        window.onload = function(event) {
+            renderTerminal();
+        };
+    </script>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <a class="navbar-brand" href="/~jmo">
+            <img width="32px" src="assets/img/icons/panda-logo.png">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/~jmo">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/~jmo/projects.html">Projects <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/~jmo/blog.html">Blog</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Projects Section -->
+    <div class="container">
+        <div class="jumbotron" style="background-color:transparent">
+
+            <!-- Tabs -->
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="graphic-design-tab" data-toggle="tab" href="#graphic-design" role="tab" aria-controls="graphic-design" aria-selected="true">Graphic Design</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="web-design-tab" data-toggle="tab" href="#web-design" role="tab" aria-controls="web-design" aria-selected="false">Web Design</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="code-tab" data-toggle="tab" href="#code" role="tab" aria-controls="code" aria-selected="false">Code</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="videos-tab" data-toggle="tab" href="#videos" role="tab" aria-controls="videos" aria-selected="false">Videos</a>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="myTabContent">
+
+                <!-- Graphic Design Tab -->
+                <div class="tab-pane fade show active" id="graphic-design" role="tabpanel" aria-labelledby="graphic-design-tab">
+                    <div class="container project-tab">
+                        <div class="card-columns">
+
+                            <!-- Joja Logo -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/img/projects/screenshots/graphic-design/logo-joja.png">
+                                <div class="card-body">
+                                    <h5 class="card-title">JOJA Logo</h5>
+                                    <p class="card-text">Logo designed for a friend's game development group</p>
+                                    <a href="assets/img/projects/full-size/graphic-design/logo-joja.png" class="btn btn-outline-primary">Full Size</a>
+                                </div>
+                            </div>
+
+                            <!-- 100th Day -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/img/projects/screenshots/graphic-design/page-100th-school-day.png">
+                                <div class="card-body">
+                                    <h5 class="card-title">Yearbook Page</h5>
+                                    <p class="card-text">100th day of school</p>
+                                    <a href="assets/img/projects/full-size/graphic-design/page-100th-school-day.png" class="btn btn-outline-primary">Full Size</a>
+                                </div>
+                            </div>
+
+                            <!-- Octagon Logo Redesign -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/img/projects/screenshots/graphic-design/logo-octagon-redesign.png">
+                                <div class="card-body">
+                                    <h5 class="card-title">Octagon Logo Redesign</h5>
+                                    <p class="card-text">Redesigned logo for the Octagon (school newspaper) website</p>
+                                    <a href="assets/img/projects/full-size/graphic-design/logo-octagon-redesign.jpg" class="btn btn-outline-primary">Full Size</a>
+                                </div>
+                            </div>
+
+                            <!-- Haunted Gym -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/img/projects/screenshots/graphic-design/page-haunted-gym.png">
+                                <div class="card-body">
+                                    <h5 class="card-title">Yearbook Page</h5>
+                                    <p class="card-text">Movie poster design for Halloween haunted gym event</p>
+                                    <a href="assets/img/projects/full-size/graphic-design/page-haunted-gym.png" class="btn btn-outline-primary">Full Size</a>
+                                </div>
+                            </div>
+
+                            <!-- 2016 UltraWide Fest -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/img/projects/screenshots/graphic-design/design-ultrawidefest-2016.png">
+                                <div class="card-body">
+                                    <h5 class="card-title">UltraWide Festival 2016</h5>
+                                    <p class="card-text">Submission for LG Electronics 2016 UltraWide Festival Competition</p>
+                                    <a href="assets/img/projects/full-size/graphic-design/design-ultrawidefest-2016.jpg" class="btn btn-outline-primary">Full Size</a>
+                                </div>
+                            </div>
+
+                            <!-- Taco Contest -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/img/projects/screenshots/graphic-design/page-eating-contest.png">
+                                <div class="card-body">
+                                    <h5 class="card-title">Yearbook Page</h5>
+                                    <p class="card-text">Taco eating contest hosted by the Chicano Latinx Student Union</p>
+                                    <a href="assets/img/projects/full-size/graphic-design/page-eating-contest.png" class="btn btn-outline-primary">Full Size</a>
+                                </div>
+                            </div>
+
+                            <!-- Octagon Logo Square -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/img/projects/screenshots/graphic-design/logo-octagon-square.png">
+                                <div class="card-body">
+                                    <h5 class="card-title">Octagon Logo (Square)</h5>
+                                    <p class="card-text">Square version of the Octagon's (school newspaper) logo</p>
+                                    <a href="assets/img/projects/full-size/graphic-design/logo-octagon-square.png" class="btn btn-outline-primary">Full Size</a>
+                                </div>
+                            </div>
+
+                            <!-- GK Bake Sale -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/img/projects/screenshots/graphic-design/page-gk-bake-sale.png">
+                                <div class="card-body">
+                                    <h5 class="card-title">Yearbook Page</h5>
+                                    <p class="card-text">Glass Knife (literary magazine) bake sale</p>
+                                    <a href="assets/img/projects/full-size/graphic-design/page-gk-bake-sale.png" class="btn btn-outline-primary">Full Size</a>
+                                </div>
+                            </div>
+
+                            <!-- Account Mockup -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/img/projects/screenshots/graphic-design/design-account-mockup.png">
+                                <div class="card-body">
+                                    <h5 class="card-title">Account Visualization App Mockup</h5>
+                                    <p class="card-text">Mockup for an account visulization app that keeps track of account connections</p>
+                                    <a href="assets/img/projects/full-size/graphic-design/design-account-mockup.png" class="btn btn-outline-primary">Full Size</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Web Design Tab -->
+                <div class="tab-pane fade" id="web-design" role="tabpanel" aria-labelledby="web-design-tab">
+                    <div class="container project-tab">
+                        <div class="card-columns">
+                            <!-- SCDS Octagon -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/img/projects/screenshots/web-design/wordpress-octagon.png">
+                                <div class="card-body">
+                                    <h5 class="card-title">SCDS Octagon Website</h5>
+                                    <p class="card-text">This is a site I assembled and managed in high school for the Octagon (school newspaper).</p>
+                                    <a href="https://www.scdsoctagon.com/" class="btn btn-outline-primary">View</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <kbd style="background-color:red">2019 NSPA Pacemaker Award Finalist</kbd>
+                                    <kbd style="background-color:purple">WordPress</kbd>
+                                </div>
+                            </div>
+
+                            <!-- NHD Website -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/img/projects/screenshots/web-design/weebly-nhd-2017.png">
+                                <div class="card-body">
+                                    <h5 class="card-title">National History Day Website</h5>
+                                    <p class="card-text">This is a site I designed on Edward Snowden under the theme "Taking a Stand in History" for the 2017 National History Day Competition.</p>
+                                    <a href="http://11941403.weebly.com/overview.html" class="btn btn-outline-primary">View</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <kbd style="background-color:blue">Weebly</kbd>
+                                    <kbd style="background-color:red">CA State Finalist</kbd>
+                                    <kbd style="background-color:red">Sacramento County Board of Supervisors Award</kbd>
+                                </div>
+                            </div>
+
+                            <!-- CAMAC -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/img/projects/screenshots/web-design/wordpress-camac.png">
+                                <div class="card-body">
+                                    <h5 class="card-title">CAMAC Website</h5>
+                                    <p class="card-text">This is a site I assembled and currently manage for the Chinese American Medical Association of California.</p>
+                                    <a href="https://www.camacus.org/" class="btn btn-outline-primary">View</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <kbd style="background-color:purple">WordPress</kbd>
+                                </div>
+                            </div>
+
+                            <!-- SCDS Esports -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/img/projects/screenshots/web-design/wordpress-scdsesports.png">
+                                <div class="card-body">
+                                    <h5 class="card-title">SCDS Esports Website</h5>
+                                    <p class="card-text">This is a site I assembled and managed in high school for the Esports club.</p>
+                                    <a href="https://www.scdsesports.dreamhosters.com/" class="btn btn-outline-primary">View</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <kbd style="background-color:purple">WordPress</kbd>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Code Tab -->
+                <div class="tab-pane fade" id="code" role="tabpanel" aria-labelledby="code-tab">
+                    <div class="container project-tab">
+                        <div class="card-columns">
+
+                            <!-- Latinator -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/img/projects/screenshots/code/code-latinator3000.png">
+                                <div class="card-body">
+                                    <h5 class="card-title">The Latinator 3000</h5>
+                                    <p class="card-text">The Latinator is a website with client-side JavaScript that parses Wiktionary for Latin words and returns the result in an iFrame. (Can be customized to support other languages)</p>
+                                    <a href="https://perpetualpanda.github.io/Latinator3000/" class="btn btn-outline-primary">View Project</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <kbd style="background-color:green">HTML</kbd>
+                                    <kbd style="background-color:purple">CSS</kbd>
+                                    <kbd style="background-color:orange">JavaScript</kbd>
+                                </div>
+                            </div>
+
+                            <!-- Flutter -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/img/projects/screenshots/code/code-flutter-social.png">
+                                <div class="card-body">
+                                    <h5 class="card-title">Flutter Social</h5>
+                                    <p class="card-text">Flutter social is a social media website that uses Java back-end running on Google Cloud Platform. (Passwords kept in FireStore as Bcrypt hashes, email verification system, user search page, global and personal feeds)</p>
+                                    <a href="https://flutter-social-platform.appspot.com" class="btn btn-outline-primary">View Project</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <kbd style="background-color:red">Java</kbd>
+                                    <kbd style="background-color:darkorange">JSP</kbd>
+                                    <kbd style="background-color:green">HTML, CSS, BootStrap</kbd>
+                                    <kbd style="background-color:blueviolet">Google Cloud Platform</kbd>
+                                </div>
+                            </div>
+
+                            <!-- FileExtractor -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/banner-5.jpg">
+                                <div class="card-body">
+                                    <h5 class="card-title">FileExtractor</h5>
+                                    <p class="card-text">FileExtractor is a command line Java tool that recursively copies all of the files from a given folder.</p>
+                                    <a href="https://github.com/PerpetualPanda/FileExtractor" class="btn btn-outline-primary">View Source</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <kbd style="background-color:red">Java</kbd>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Videos Tab -->
+                <div class="tab-pane fade" id="videos" role="tabpanel" aria-labelledby="videos-tab">
+                    <div class="container project-tab">
+                        <div class="card-columns">
+
+                            <!-- NHD 2018 -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/img/projects/screenshots/videos/video-nhd-2018.png">
+                                <div class="card-body">
+                                    <h5 class="card-title">Gacaca: A Community's Compromise to End Genocide</h5>
+                                    <p class="card-text">This is a group documentary edited and narrated by me submitted to the 2018 National History Day competition under the theme "Conflict and Compromise in History".</p>
+                                    <a href="https://www.youtube.com/watch?v=_xCWUp93TLg" class="btn btn-outline-primary">View</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <kbd style="background-color:red">CA State Finalist</kbd>
+                                </div>
+                            </div>
+
+                            <!-- UltraWide Festival 2015 -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/img/projects/screenshots/videos/video-ultrawidefest-2015.png">
+                                <div class="card-body">
+                                    <h5 class="card-title">LG Cardboard Dream Setup (UltraWide Fest 2015)</h5>
+                                    <p class="card-text">This was a submission to LG Electronics' first international UltraWide Festival marketing contest under the theme "Cardboard Dream Setup", showcasing LG's curved UltraWide monitor with a cardboard mockup.</p>
+                                    <a href="https://www.youtube.com/watch?v=3gscy-KOgWo" class="btn btn-outline-primary">View</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <kbd style="background-color:red">1st Place Submission</kbd>
+                                </div>
+                            </div>
+
+                            <!-- Tonto Audio Experience -->
+                            <div class="card shadow rounded">
+                                <img class="card-img-top" src="assets/img/projects/screenshots/videos/video-book-report.png">
+                                <div class="card-body">
+                                    <h5 class="card-title">The Lone Ranger and Tonto Fistfight in Heaven: An Audio Experience</h5>
+                                    <p class="card-text">A book report on "The Lone Ranger and Tonto Fistfight in Heaven" for my AP Literature class in the form of an audio experience</p>
+                                    <a href="https://www.youtube.com/watch?v=oVfiQEhDF6M" class="btn btn-outline-primary">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-text">Copyright © Yuzhou (Joe) Mo | PerpetualPanda 2019</p>
+    </footer>
+</body>
+
+</html>

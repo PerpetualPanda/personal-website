@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Personal website">
+    <meta name="author" content="Joe Mo (PPanda)">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="/assets/img/icons/favicon.png">
+
+    <title>Joe Mo - Home</title>
+</head>
+
+<body>
+
+    <!-- Polygonal Banner -->
+    <div class="page-header">
+        <!-- About Card -->
+        <div class="container">
+            <div class="card shadow-lg bg-transparent rounded" id="terminal-shadow">
+                <!-- About Card Title Bar -->
+                <div class="card-footer w-100 text-muted" id="terminal-titlebar">
+                    <img src="assets/img/header/window-buttons.png" id="terminal-buttons">
+                    <p id="terminal-titletext"></p>
+                </div>
+                <!-- About Card Body -->
+                <div class="row no-gutters" id="terminal-body">
+                    <!-- About Card Picture -->
+                    <div class="col-auto">
+                        <img width="200px" src="assets/img/header/profile-picture.jpg" alt="Profile Picture" id="terminal-profilepic">
+                    </div>
+                    <!-- About Card Description -->
+                    <div class="col">
+                        <div class="card-block px-2">
+                            <div class="container" id="terminal-textcontainer">
+                                <h4 class="card-title terminal-bodytext">Yuzhou "Joe" Mo</h4>
+                                <br>
+                                <p class="card-text terminal-bodytext">Computer Science Student at UC Berkeley</p>
+                                <p class="card-text terminal-bodytext">Contact: yuzhoumo@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sets terminal theme about card title on window resize -->
+    <script>
+        function renderTerminal() {
+            var x = document.getElementById("terminal-body").offsetWidth;
+            var y = document.getElementById("terminal-body").offsetHeight;
+            if (x >= 486) {
+                document.getElementById("terminal-titletext").innerHTML = 'bash -- server@berkeley.edu: - ' + x + 'x' + y;
+                document.getElementById("terminal-profilepic").style.width = '200px';
+            } else {
+                document.getElementById("terminal-titletext").innerHTML = 'bash - ' + x + 'x' + y;
+                document.getElementById("terminal-profilepic").style.width = '100%';
+            }
+        }
+
+        window.onresize = function(event) {
+            renderTerminal();
+        };
+
+        window.onload = function(event) {
+            renderTerminal();
+        };
+    </script>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <a class="navbar-brand" href="/~jmo">
+            <img width="32px" src="assets/img/icons/panda-logo.png">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/~jmo">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/~jmo/projects.html">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/~jmo/blog.html">Blog</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Information Section -->
+    <div class="container">
+        <div class="jumbotron jumbo-section">
+
+            <!-- About Me -->
+            <h1 class="info-h1">About</h1><br>
+            <p class="info-paragraph">Hello, world! I'm Joe Mo (a.k.a. PPanda).</p>
+            <p class="info-paragraph">I'm studying Computer Science at UC Berkeley, and I'm extremely passionate about cyber-security. Besides programming, I love graphic design and video editing. I believe that the wide adoption of secure technologies relies on their ease of use, and user experience is just as important as functionality. My goal is to make secure technologies accessible to everyone through intuitive design. Convenience doesn't have to mean sacrificing privacy and security!</p><br>
+
+            <!-- Skills -->
+            <p id="homepage-skills">
+                <strong>Skills: </strong>
+                <kbd class="skill-tag">Java</kbd>
+                <kbd class="skill-tag">Python</kbd>
+                <kbd class="skill-tag">HTML, CSS, JS, Bootstrap</kbd>
+                <kbd class="skill-tag">Adobe Photoshop</kbd>
+                <kbd class="skill-tag">Adobe Premiere Pro</kbd>
+            </p>
+
+            <!-- Social Media Links -->
+            <a href="https://www.linkedin.com/in/yuzhou-joe-mo-a4b502187/" class="fa fa-linkedin"></a>
+            <a href="https://github.com/perpetualpanda/" class="fa fa-github"></a>
+            <a href="https://www.instagram.com/jo3_mo/" class="fa fa-instagram"></a>
+            <a href="https://www.youtube.com/thecreeperbrine" class="fa fa-youtube"></a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-text">Copyright © Yuzhou (Joe) Mo | PerpetualPanda 2019</p>
+    </footer>
+</body>
+
+</html>
