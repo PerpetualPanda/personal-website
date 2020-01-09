@@ -1,3 +1,3 @@
 # Personal Website
 
-This is a personal website I wrote whilst pulling my first all-nighter.
+This is a personal website I wrote while pulling my first all-nighter.
