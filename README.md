@@ -9,7 +9,7 @@ Link: https://ocf.io/jmo
 
 ## Using the site as a template
 
-Change the following files located in `assets/includes` to customize page content:
+### Change the following files located in `assets/includes` to customize page content:
 
 | File               | Description                            |
 |--------------------|----------------------------------------|
@@ -20,7 +20,7 @@ Change the following files located in `assets/includes` to customize page conten
 | about-main.html    | Main section of home page              |
 | project-tabs.html  | Tabs and tab content of projects page  |
 
-Follow these instructions to customize other elements:
+### Follow these instructions to customize other elements:
 
 | Element         | Instructions                                                             |
 |-----------------|--------------------------------------------------------------------------|
