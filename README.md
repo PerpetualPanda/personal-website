@@ -7,6 +7,8 @@ repurposed (see instructions below).
 
 Link: https://ocf.io/jmo
 
+![Screenshot of Website](screenshot.png)
+
 ## Using the site as a template
 
 **Change the following files located in** `assets/includes` **to customize page content:**
