@@ -29,6 +29,11 @@ body {
     font-size: 14pt;
 }
 
+.info-paragraph a {
+    color:lightblue;
+    font-size: 14pt;
+}
+
 .jumbo-section {
     background-color:transparent;
 }
