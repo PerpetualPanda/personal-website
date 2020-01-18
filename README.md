@@ -1,26 +1,32 @@
 # Personal Website
 
-This is a personal website I wrote while pulling my first all-nighter in college. It's currently
-hosted on Berkeley's Open Computing Facility server. `website-optimized` is a version of the site
-with minified HTML/CSS/JS and compressed images. The site is designed to allow it to be easily
-repurposed (see instructions below).
+This is a personal website I initially wrote while pulling my first all-nighter in college (couldn't sleep because
+I had an energy drink). It's currently hosted on Berkeley's Open Computing Facility server and on my GitHub Pages
+site. The site is designed to allow for it to be easily repurposed as a template (see instructions below).
 
-Link: https://ocf.io/jmo
-
-![Screenshot of Website](screenshot.png)
+OCF Link: https://ocf.io/jmo
+Github Pages Link: http://yuzhoumo.github.io/
 
 ## Using the site as a template
 
 **Change the following files located in** `assets/includes` **to customize page content:**
 
-| File               | Description                            |
-|--------------------|----------------------------------------|
-| head.html          | Add items to the head tag of all pages |
-| footer.html        | Change the footer text on all pages    |
-| nav-links.html     | Change navbar links on all pages       |
-| terminal-data.html | Change the terminal text on all pages  |
-| about-main.html    | Main section of home page              |
-| project-tabs.html  | Tabs and tab content of projects page  |
+| File                    | Description                                |
+|-------------------------|--------------------------------------------|
+| head.html               | Add items to the head tag of all pages     |
+| footer.html             | Change the footer text on all pages        |
+| nav-links.html          | Change navbar links on all pages           |
+| terminal-data.html      | Change the terminal text on all pages      |
+| about-main.html         | Main section of home page                  |
+| project-tabs.html       | Tabs and tab content of projects page      |
+| article-list.html		  | Links to posts that appear on blog.html    |
+| blog-content-head.html  | Adds html to the top of all articles       |
+| blog-content-sub.html   | Adds html to the subtitles of all articles |
+| blog-pre-footer.html    | Adds html to the bottom of all articles    |
+| blog-quote.html         | Adds blockquote to the top of blog.html    |
+
+Note: Any script tags imported from includes are ignored (presumably to prevent XSS attacks), so scripts must be
+directly added to each page.
 
 **Follow these instructions to customize other elements:**
 
