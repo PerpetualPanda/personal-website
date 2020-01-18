@@ -2,10 +2,6 @@ body {
     background-color: #1e1e1e;
 }
 
-a, p, li {
-    font-size: 110%
-}
-
 #blog-title {
     color: white
 }
