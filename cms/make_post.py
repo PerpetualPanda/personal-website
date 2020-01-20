@@ -67,15 +67,15 @@ class Article:
 
 	def html_beautify(self, html: str) -> str:
 		"""Takes in HTML and returns beautified HTML"""
-
+		
 		orig_prettify = BeautifulSoup.prettify
 		r = re.compile(r'^(\s*)', re.MULTILINE)
 
-		def prettify(self, encoding=None, formatter='minimal', indent_width=4):
+		def prettify(self, encoding=None, formatter='minimal', indent_width=2):
 			return r.sub(r'\1' * indent_width, orig_prettify(self, encoding, formatter))
 
 		BeautifulSoup.prettify = prettify
-
+		
 		return BeautifulSoup(html, 'html.parser').prettify()
 
 	def gen_filename(self, title: str) -> str:
@@ -85,7 +85,7 @@ class Article:
 		title = title.strip().lower().replace(' ', '-')
 		title = re.sub(r'[^\w'+ignore+']', '',title)
 
-		return title + '-' + str(self.post_id)
+		return title + '-id' + str(self.post_id)
 
 	def gen_id(self, log_path: str) -> int:
 		"""Finds ID number of last post in log and increments by one"""
@@ -105,7 +105,7 @@ class Article:
 		"""Moves blog data into proper folders, backs up old files"""
 
 		post_media_dir = MEDIA_DIR.rstrip('/') + '/' + str(self.post_id)
-		if not os.path.isdir(post_media_dir):
+		if not os.path.isdir(post_media_dir) and len(self.media) > 0:
 			os.mkdir(post_media_dir)
 
 		for push in self.push_files:
@@ -176,6 +176,7 @@ class Article:
 		with open(LINK_TEMPLATE, mode='r') as template:
 			content = template.read()
 			content = content.replace('ID_NUMBER', str(id_num), 1)
+			content = content.replace('POST_LINK', self.link, 1)
 			content = content.replace('POST_TITLE', title, 1)
 			content = content.replace('POST_DATE', post_date, 1)
 			content = content.replace('POST_BLURB', blurb, 1)
@@ -183,6 +184,10 @@ class Article:
 		with open(LINK_FILE, mode='r') as link_file:
 			old_content = link_file.read()
 			index = old_content.find('<article')
+
+			if index == -1:
+				index = len(old_content)
+
 			new_content = old_content[:index] + content + '\n\n' + old_content[index:]
 
 			output_path = TEMP_DIR.rstrip('/') + '/' + filename
@@ -283,10 +288,7 @@ def media_input() -> List[str]:
 def main():
 	"""Updates blog with new post content"""
 
-	if yes_no('Create a new blog post? (y/n): '):
-		if not os.path.isdir(TEMP_DIR):
-			os.mkdir(TEMP_DIR)
-		
+	if yes_no('\nCreate a new blog post? (y/n): '):
 		name = confirmed_input('Enter your name: ').strip()
 		title = confirmed_input('Enter title: ').strip()
 		blurb = confirmed_input('Enter blurb: ').strip()
@@ -299,12 +301,21 @@ def main():
 		post.write_media()
 		post.write_link()
 		post.write_log()
+		
+		print('\nConfirmation:\n')
+		print('Title:', post.title)
+		print('Author:', post.author)
+		print('Date:', post.date)
+		print('Blurb:', post.blurb)
+		print('Media:', post.media)
+		print('Length:', str(post.length) + ' words')
+		print('Link:', post.link)
 
-		post.push_content()
+		if yes_no('\nDo you wish to push this content? (y/n): '):
+			post.push_content()
+
 		post.push_files = []
 		post.clear_temp()
-
-		os.remove(TEMP_DIR)
 
 	print('\nDone\n')
 
