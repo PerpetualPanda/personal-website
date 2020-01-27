@@ -1,8 +1,9 @@
 # Personal Website
 
 This is a personal website I initially wrote while pulling my first all-nighter in college (couldn't sleep because
-I had an energy drink). It's currently hosted on Berkeley's Open Computing Facility server and on my GitHub Pages
-site. The site is designed to allow for it to be easily repurposed as a template (see instructions below).
+I had an energy drink). It's currently hosted on Berkeley's Open Computing Facility server and on my GitHub Pages.
+The site is designed to allow for it to be easily repurposed as a template (see instructions below). To make blog
+posts, the `make_post.py` Python script can be used to automatically convert markdown inputs to blog pages.
 
 * OCF Link: https://ocf.io/jmo
 * Github Pages Link: http://yuzhoumo.github.io/
