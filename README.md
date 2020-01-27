@@ -37,7 +37,7 @@ directly added to each page.
 | Navbar logo     | Replace the png file `assets/img/icons/logo.png`                         |
 | Terminal title  | Replace the text on lines 13 and 17 in `assets/scipts/terminalRender.js` |
 
-## Creating Blog Posts
+## Creating blog posts
 
 Blog posts can be automated by running `make_post.py` from the `cms` folder. Simply input your post in markdown and
 specify the paths or links to any media you included in your post. It will automatically update `article-list.html`,
