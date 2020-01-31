@@ -183,7 +183,7 @@ class Article:
             content = content.replace('POST_DATE', post_date, 1)
             content = content.replace('POST_BLURB', blurb, 1)
 
-        with open(LINK_FILE.replace('<PID>', str(self.id-1)), mode='r') as link_file:
+        with open(LINK_FILE.replace('<PID>', str(self.post_id-1)), mode='r') as link_file:
             old_content = link_file.read()
             index = old_content.find('<article')
 
@@ -196,7 +196,7 @@ class Article:
             with open(output_path, mode='w') as new_link_file:
                 new_link_file.write(new_content)
 
-        paths = (output_path, LINK_FILE.replace('<PID>', str(self.id-1)).rstrip('/'))
+        paths = (output_path, LINK_FILE.replace('<PID>', str(self.post_id-1)).rstrip('/'))
         self.push_files.append(paths)
 
     def write_markdown(self) -> None:
@@ -236,6 +236,8 @@ def bust_cache(blog_page, id_num):
 
     with open(blog_page, mode='w') as bp:
         bp.write(output)
+
+    os.rename(LINK_FILE.replace('<PID>', str(id_num-1)), LINK_FILE.replace('<PID>', str(id_num)))
 
 
 def yes_no(message='') -> bool:
