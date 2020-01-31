@@ -230,7 +230,7 @@ def bust_cache(blog_page, id_num):
 
     article_list_div = parsed_html.find(id='article-list')
     stop = article_list_div['include-html'].find('?id=')
-    article_list_div['include-html'] = article_list_div['include-html'][:stop+1] + '?id=' + str(id_num)
+    article_list_div['include-html'] = article_list_div['include-html'][:stop] + '?id=' + str(id_num)
 
     output = Article.html_beautify(None, str(parsed_html))
 
