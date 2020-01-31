@@ -18,227 +18,245 @@ TEMP_DIR = './tmp'
 
 # Default file names
 ARTICLE_TEMPLATE_FN = 'article-template.html'
+BLOG_PAGE_FN = 'blog.html'
 LINK_FILE_FN = 'article-list.html'
 LINK_TEMPLATE_FN = 'link-template.html'
 LOG_FN = 'log.csv'
 
 # Default file paths
 ARTICLE_TEMPLATE = './templates/' + ARTICLE_TEMPLATE_FN
+BLOG_PAGE = '../' + BLOG_PAGE_FN
 LINK_FILE = '../assets/includes/' + LINK_FILE_FN
 LINK_TEMPLATE = './templates/' + LINK_TEMPLATE_FN
 LOG = './' + LOG_FN
 
 
 class Article:
-	def __init__(self, author: str, title: str, blurb: str, markdown: str, media: List[str]):
-		self.author = author.strip()
-		self.title = title.strip()
-		self.blurb = blurb.strip()
-		self.markdown = markdown.strip()
-		self.media = media
+    def __init__(self, author: str, title: str, blurb: str, markdown: str, media: List[str]):
+        self.author = author.strip()
+        self.title = title.strip()
+        self.blurb = blurb.strip()
+        self.markdown = markdown.strip()
+        self.media = media
 
-		self.date = datetime.datetime.now()
-		self.html = self.markdown_to_html(markdown)
-		self.html = self.html_beautify(self.html)
-		self.length, self.read_time = self.calc_length(markdown)
+        self.date = datetime.datetime.now()
+        self.html = self.markdown_to_html(markdown)
+        self.html = self.html_beautify(self.html)
+        self.length, self.read_time = self.calc_length(markdown)
 
-		self.post_id = self.gen_id(LOG)
-		self.filename = self.gen_filename(title)
-		self.link = BLOGS_LINK.rstrip('/') + '/' + self.filename
-		self.push_files = []
+        self.post_id = self.gen_id(LOG)
+        self.filename = self.gen_filename(title)
+        self.link = BLOGS_LINK.rstrip('/') + '/' + self.filename
+        self.push_files = []
 
-	def calc_length(self, markdown_content: str) -> Tuple[int]:
-		"""Returns word count and time in minutes to read content"""
+    def calc_length(self, markdown_content: str) -> Tuple[int, int]:
+        """Returns word count and time in minutes to read content"""
 
-		word_count = len(markdown_content.split(' '))
-		read_time = round(word_count/200)
+        word_count = len(markdown_content.split(' '))
+        read_time = round(word_count / 200)
 
-		if read_time == 0:
-			read_time = 1
+        if read_time == 0:
+            read_time = 1
 
-		return word_count, read_time
+        return word_count, read_time
 
-	def clear_temp(self) -> None:
-		"""Clears temporary directory"""
+    def clear_temp(self) -> None:
+        """Clears temporary directory"""
 
-		files = os.listdir(TEMP_DIR)
-		for f in files:
-			os.remove(TEMP_DIR.rstrip('/') + '/' + f)
+        files = os.listdir(TEMP_DIR)
+        for f in files:
+            os.remove(TEMP_DIR.rstrip('/') + '/' + f)
 
-	def html_beautify(self, html: str) -> str:
-		"""Takes in HTML and returns beautified HTML"""
-		
-		orig_prettify = BeautifulSoup.prettify
-		r = re.compile(r'^(\s*)', re.MULTILINE)
+    def html_beautify(self, html: str) -> str:
+        """Takes in HTML and returns beautified HTML"""
 
-		def prettify(self, encoding=None, formatter='minimal', indent_width=2):
-			return r.sub(r'\1' * indent_width, orig_prettify(self, encoding, formatter))
+        orig_prettify = BeautifulSoup.prettify
+        r = re.compile(r'^(\s*)', re.MULTILINE)
 
-		BeautifulSoup.prettify = prettify
-		
-		return BeautifulSoup(html, 'html.parser').prettify()
+        def prettify(self, encoding=None, formatter='minimal', indent_width=2):
+            return r.sub(r'\1' * indent_width, orig_prettify(self, encoding, formatter))
 
-	def gen_filename(self, title: str) -> str:
-		"""Takes title and creates a valid filename"""
+        BeautifulSoup.prettify = prettify
 
-		ignore = '-'
-		title = title.strip().lower().replace(' ', '-')
-		title = re.sub(r'[^\w'+ignore+']', '',title)
+        return BeautifulSoup(html, 'html.parser').prettify()
 
-		return title + '-id' + str(self.post_id)
+    def gen_filename(self, title: str) -> str:
+        """Takes title and creates a valid filename"""
 
-	def gen_id(self, log_path: str) -> int:
-		"""Finds ID number of last post in log and increments by one"""
+        ignore = '-'
+        title = title.strip().lower().replace(' ', '-')
+        title = re.sub(r'[^\w' + ignore + ']', '', title)
 
-		with open(log_path, mode='r') as csv_log:
-			reader = list(csv.reader(csv_log))
+        return title + '-id' + str(self.post_id)
 
-		if len(reader) > 1:
-			return int(reader[1][0]) + 1
-		return 1
+    def gen_id(self, log_path: str) -> int:
+        """Finds ID number of last post in log and increments by one"""
 
-	def markdown_to_html(self, markdown_content: str) -> str:
-		"""Converts markdown content to HTML"""
-		return markdown2.markdown(markdown_content)
-	
-	def push_content(self) -> None:
-		"""Moves blog data into proper folders, backs up old files"""
+        with open(log_path, mode='r') as csv_log:
+            reader = list(csv.reader(csv_log))
 
-		post_media_dir = MEDIA_DIR.rstrip('/') + '/' + str(self.post_id)
-		if not os.path.isdir(post_media_dir) and len(self.media) > 0:
-			os.mkdir(post_media_dir)
+        if len(reader) > 1:
+            return int(reader[1][0]) + 1
+        return 1
 
-		for push in self.push_files:
-			name = os.path.basename(push[1])
+    def markdown_to_html(self, markdown_content: str) -> str:
+        """Converts markdown content to HTML"""
+        return markdown2.markdown(markdown_content)
 
-			if os.path.isfile(push[1]):
-				os.rename(push[1], BACKUP_DIR.rstrip('/') + '/' + str(self.post_id) + ' BACKUP ' + name)
+    def push_content(self) -> None:
+        """Moves blog data into proper folders, backs up old files"""
 
-			os.rename(push[0], push[1])
-				
+        post_media_dir = MEDIA_DIR.rstrip('/') + '/' + str(self.post_id)
+        if not os.path.isdir(post_media_dir) and len(self.media) > 0:
+            os.mkdir(post_media_dir)
 
-	def write_article(self) -> None:
-		"""Creates new HTML file for article and writes to temp directory"""
+        for push in self.push_files:
+            name = os.path.basename(push[1])
 
-		filename = self.filename + '.html'
-		tab_title = self.author + ' - ' + self.title
-		title = self.title
-		post_date = self.date.strftime('%B %-dth, %Y')
-		subtitle = self.author + '&nbsp; | &nbsp;' + post_date + '&nbsp; | &nbsp;' + str(self.read_time) + ' Minute Read&nbsp; | &nbsp;'
-		post_content = self.html
+            if os.path.isfile(push[1]):
+                os.rename(push[1], BACKUP_DIR.rstrip('/') + '/' + str(self.post_id) + ' BACKUP ' + name)
 
-		with open(ARTICLE_TEMPLATE, mode='r') as template:
-			content = template.read()
-			content = content.replace('ARTICLE_TAB_TITLE', tab_title, 1)
-			content = content.replace('ARTICLE_TITLE', title, 1)
-			content = content.replace('ARTICLE_SUBTITLE', subtitle, 1)
-			content = content.replace('ARTICLE_CONTENT', post_content, 1)
-			content = self.html_beautify(content)
+            os.rename(push[0], push[1])
 
-		output_path = TEMP_DIR.rstrip('/') + '/' + filename
-		with open(output_path, mode='w') as article:
-			article.write(content)
+    def write_article(self) -> None:
+        """Creates new HTML file for article and writes to temp directory"""
 
-		paths = (output_path, BLOGS_DIR.rstrip('/') + '/' + filename)
-		self.push_files.append(paths)
+        filename = self.filename + '.html'
+        tab_title = self.author + ' - ' + self.title
+        title = self.title
+        post_date = self.date.strftime('%B %-dth, %Y')
+        subtitle = self.author + '&nbsp; | &nbsp;' + post_date + '&nbsp; | &nbsp;' + str(
+            self.read_time) + ' Minute Read&nbsp; | &nbsp;'
+        post_content = self.html
 
-	def write_log(self) -> None:
-		"""Writes article metadata to CSV at file_path"""
+        with open(ARTICLE_TEMPLATE, mode='r') as template:
+            content = template.read()
+            content = content.replace('ARTICLE_TAB_TITLE', tab_title, 1)
+            content = content.replace('ARTICLE_TITLE', title, 1)
+            content = content.replace('ARTICLE_SUBTITLE', subtitle, 1)
+            content = content.replace('ARTICLE_CONTENT', post_content, 1)
+            content = self.html_beautify(content)
 
-		meta = [str(self.post_id),
-				str(self.date),
-				self.title,
-				str(self.length),
-				self.link]
+        output_path = TEMP_DIR.rstrip('/') + '/' + filename
+        with open(output_path, mode='w') as article:
+            article.write(content)
 
-		with open(LOG, mode='r') as csv_log:
-			reader = list(csv.reader(csv_log))
-			reader.insert(1, meta)
-			output_path = TEMP_DIR.rstrip('/') + '/' + LOG_FN
+        paths = (output_path, BLOGS_DIR.rstrip('/') + '/' + filename)
+        self.push_files.append(paths)
 
-			with open (output_path, mode='w') as output:
-				writer = csv.writer(output)
-				for line in reader:
-					writer.writerow(line)
+    def write_log(self) -> None:
+        """Writes article metadata to CSV at file_path"""
 
-			paths = (output_path, LOG)
-			self.push_files.append(paths)
+        meta = [str(self.post_id),
+                str(self.date),
+                self.title,
+                str(self.length),
+                self.link]
 
-	def write_link(self) -> None:
-		"""Writes new article link/blurb entry to temp directory"""
+        with open(LOG, mode='r') as csv_log:
+            reader = list(csv.reader(csv_log))
+            reader.insert(1, meta)
+            output_path = TEMP_DIR.rstrip('/') + '/' + LOG_FN
 
-		filename = 'article-list.html'
-		id_num = self.post_id
-		title = self.title
-		blurb = self.blurb
-		post_date = self.date.strftime('%d %b %Y')
+            with open(output_path, mode='w') as output:
+                writer = csv.writer(output)
+                for line in reader:
+                    writer.writerow(line)
 
-		with open(LINK_TEMPLATE, mode='r') as template:
-			content = template.read()
-			content = content.replace('ID_NUMBER', str(id_num), 1)
-			content = content.replace('POST_LINK', self.link, 1)
-			content = content.replace('POST_TITLE', title, 1)
-			content = content.replace('POST_DATE', post_date, 1)
-			content = content.replace('POST_BLURB', blurb, 1)
+            paths = (output_path, LOG)
+            self.push_files.append(paths)
 
-		with open(LINK_FILE, mode='r') as link_file:
-			old_content = link_file.read()
-			index = old_content.find('<article')
+    def write_link(self) -> None:
+        """Writes new article link/blurb entry to temp directory"""
 
-			if index == -1:
-				index = len(old_content)
+        filename = 'article-list.html'
+        id_num = self.post_id
+        title = self.title
+        blurb = self.blurb
+        post_date = self.date.strftime('%d %b %Y')
 
-			new_content = old_content[:index] + content + '\n\n' + old_content[index:]
+        with open(LINK_TEMPLATE, mode='r') as template:
+            content = template.read()
+            content = content.replace('ID_NUMBER', str(id_num), 1)
+            content = content.replace('POST_LINK', self.link, 1)
+            content = content.replace('POST_TITLE', title, 1)
+            content = content.replace('POST_DATE', post_date, 1)
+            content = content.replace('POST_BLURB', blurb, 1)
 
-			output_path = TEMP_DIR.rstrip('/') + '/' + filename
-			with open(output_path, mode='w') as new_link_file:
-				new_link_file.write(new_content)
+        with open(LINK_FILE, mode='r') as link_file:
+            old_content = link_file.read()
+            index = old_content.find('<article')
 
-		paths = (output_path, LINK_FILE.rstrip('/'))
-		self.push_files.append(paths)
-	
-	def write_markdown(self) -> None:
-		"""Writes article's markdown content to temp directory"""
-		
-		filename = self.filename + '.md'
-		output_path = TEMP_DIR.rstrip('/') + '/' + filename
+            if index == -1:
+                index = len(old_content)
 
-		with open(output_path, mode='w') as md:
-			md.write(self.markdown)
-			paths = (output_path, MARKDOWN_DIR.rstrip('/') + '/' + filename)
-			self.push_files.append(paths)
+            new_content = old_content[:index] + content + '\n\n' + old_content[index:]
 
-	def write_media(self) -> None:
-		"""Writes all media to temp folder"""
+            output_path = TEMP_DIR.rstrip('/') + '/' + filename
+            with open(output_path, mode='w') as new_link_file:
+                new_link_file.write(new_content)
 
-		output_path = TEMP_DIR.rstrip('/')
-		for m in self.media:
-			name = os.path.basename(m)
-			copyfile(m, output_path + '/' + name)
+        paths = (output_path, LINK_FILE.rstrip('/'))
+        self.push_files.append(paths)
 
-			paths = (output_path + '/' + name, MEDIA_DIR.rstrip('/') + '/' + str(self.post_id) + '/' + name)
-			self.push_files.append(paths)
+    def write_markdown(self) -> None:
+        """Writes article's markdown content to temp directory"""
+
+        filename = self.filename + '.md'
+        output_path = TEMP_DIR.rstrip('/') + '/' + filename
+
+        with open(output_path, mode='w') as md:
+            md.write(self.markdown)
+            paths = (output_path, MARKDOWN_DIR.rstrip('/') + '/' + filename)
+            self.push_files.append(paths)
+
+    def write_media(self) -> None:
+        """Writes all media to temp folder"""
+
+        output_path = TEMP_DIR.rstrip('/')
+        for m in self.media:
+            name = os.path.basename(m)
+            copyfile(m, output_path + '/' + name)
+
+            paths = (output_path + '/' + name, MEDIA_DIR.rstrip('/') + '/' + str(self.post_id) + '/' + name)
+            self.push_files.append(paths)
+
+
+def bust_cache(blog_page, id_num):
+    """Replaces ?id= query string with post id on article list"""
+
+    with open(blog_page, mode='r') as bp:
+        parsed_html = BeautifulSoup(bp.read(), features='html.parser')
+
+    article_list_div = parsed_html.find(id='article-list')
+    stop = article_list_div['include-html'].find('?id=')
+    article_list_div['include-html'] = article_list_div['include-html'][:stop] + '?id=' + str(id_num)
+
+    output = Article.html_beautify(str(parsed_html))
+
+    with open(blog_page, mode='w') as bp:
+        bp.write(output)
 
 
 def yes_no(message='') -> bool:
-	"""Returns True if choice is 'y' or 'yes', False otherwise"""
+    """Returns True if choice is 'y' or 'yes', False otherwise"""
 
-	choice = input(message)
+    choice = input(message)
 
-	if choice.strip().lower() in ('y', 'yes'):
-		return True
-	return False
+    if choice.strip().lower() in ('y', 'yes'):
+        return True
+    return False
 
 
 def confirmed_input(message='') -> str:
-	"""Prompts user to confirm text is their desired input"""
+    """Prompts user to confirm text is their desired input"""
 
-	text = input(message)
-	confirm = yes_no('Are you sure? (y/n): ')
+    text = input(message)
+    confirm = yes_no('Are you sure? (y/n): ')
 
-	if confirm:
-		return text
-	return confirmed_input(message)
+    if confirm:
+        return text
+    return confirmed_input(message)
 
 
 def markdown_input(message: str) -> str:
@@ -265,59 +283,62 @@ def markdown_input(message: str) -> str:
 
 
 def media_input() -> List[str]:
-	"""Input file paths to media to be copied"""
+    """Input file paths to media to be copied"""
 
-	media_paths = []
-	if yes_no('Any media (images/video) to upload? (y/n): '):
-		more = True
-		while more:
-			path = confirmed_input('Enter path to media: ').strip()
-			name = os.path.basename(path)
+    media_paths = []
+    if yes_no('Any media (images/video) to upload? (y/n): '):
+        more = True
+        while more:
+            path = confirmed_input('Enter path to media: ').strip()
+            name = os.path.basename(path)
 
-			if name in media_paths:
-				print('Error, file with same name already exists: ' + name)
-			elif os.path.isfile(path):
-				media_paths.append(path)
-			else:
-				print('Error, not a file: ' + path)
+            if name in media_paths:
+                print('Error, file with same name already exists: ' + name)
+            elif os.path.isfile(path):
+                media_paths.append(path)
+            else:
+                print('Error, not a file: ' + path)
 
-			more = yes_no('Upload more? (y/n): ')
+            more = yes_no('Upload more? (y/n): ')
 
-	return media_paths
+    return media_paths
+
 
 def main():
-	"""Updates blog with new post content"""
+    """Updates blog with new post content"""
 
-	if yes_no('\nCreate a new blog post? (y/n): '):
-		name = confirmed_input('Enter your name: ').strip()
-		title = confirmed_input('Enter title: ').strip()
-		blurb = confirmed_input('Enter blurb: ').strip()
-		content = markdown_input('Enter markdown content below:').strip()
-		media = media_input()
+    if yes_no('\nCreate a new blog post? (y/n): '):
+        name = confirmed_input('Enter your name: ').strip()
+        title = confirmed_input('Enter title: ').strip()
+        blurb = confirmed_input('Enter blurb: ').strip()
+        content = markdown_input('Enter markdown content below:').strip()
+        media = media_input()
 
-		post = Article(name, title, blurb, content, media)
-		post.write_markdown()
-		post.write_article()
-		post.write_media()
-		post.write_link()
-		post.write_log()
-		
-		print('\nConfirmation:\n')
-		print('Title:', post.title)
-		print('Author:', post.author)
-		print('Date:', post.date)
-		print('Blurb:', post.blurb)
-		print('Media:', post.media)
-		print('Length:', str(post.length) + ' words')
-		print('Link:', post.link)
+        post = Article(name, title, blurb, content, media)
+        post.write_markdown()
+        post.write_article()
+        post.write_media()
+        post.write_link()
+        post.write_log()
 
-		if yes_no('\nDo you wish to push this content? (y/n): '):
-			post.push_content()
+        print('\nConfirmation:\n')
+        print('Title:', post.title)
+        print('Author:', post.author)
+        print('Date:', post.date)
+        print('Blurb:', post.blurb)
+        print('Media:', post.media)
+        print('Length:', str(post.length) + ' words')
+        print('Link:', post.link)
 
-		post.push_files = []
-		post.clear_temp()
+        if yes_no('\nDo you wish to push this content? (y/n): '):
+            post.push_content()
+            bust_cache(BLOG_PAGE, post.post_id)
 
-	print('\nDone\n')
+        post.push_files = []
+        post.clear_temp()
+
+    print('\nDone\n')
+
 
 if __name__ == "__main__":
     main()
