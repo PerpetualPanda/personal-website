@@ -30,6 +30,17 @@ LINK_FILE = '../assets/includes/' + LINK_FILE_FN
 LINK_TEMPLATE = './templates/' + LINK_TEMPLATE_FN
 LOG = './' + LOG_FN
 
+# Modify BeautifulSoup.prettify function to 4 space indents
+orig_prettify = BeautifulSoup.prettify
+r = re.compile(r'^(\s*)', re.MULTILINE)
+
+
+def prettify(self, encoding=None, formatter='minimal', indent_width=4):
+    return r.sub(r'\1' * indent_width, orig_prettify(self, encoding, formatter))
+
+
+BeautifulSoup.prettify = prettify
+
 
 class Article:
     def __init__(self, author: str, title: str, blurb: str, markdown: str, media: List[str]):
@@ -69,14 +80,6 @@ class Article:
 
     def html_beautify(self, html: str) -> str:
         """Takes in HTML and returns beautified HTML"""
-
-        orig_prettify = BeautifulSoup.prettify
-        r = re.compile(r'^(\s*)', re.MULTILINE)
-
-        def prettify(self, encoding=None, formatter='minimal', indent_width=2):
-            return r.sub(r'\1' * indent_width, orig_prettify(self, encoding, formatter))
-
-        BeautifulSoup.prettify = prettify
 
         return BeautifulSoup(html, 'html.parser').prettify()
 
@@ -232,7 +235,7 @@ def bust_cache(blog_page, id_num):
     stop = article_list_div['include-html'].find('.id')
     article_list_div['include-html'] = article_list_div['include-html'][:stop] + '.id' + str(id_num) + '.html'
 
-    output = Article.html_beautify(None, str(parsed_html))
+    output = str(parsed_html)
 
     with open(blog_page, mode='w') as bp:
         bp.write(output)
