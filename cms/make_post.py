@@ -19,7 +19,7 @@ TEMP_DIR = './tmp'
 # Default file names
 ARTICLE_TEMPLATE_FN = 'article-template.html'
 BLOG_PAGE_FN = 'blog.html'
-LINK_FILE_FN = 'article-list.html'
+LINK_FILE_FN = 'article-list.id<PID>.html'
 LINK_TEMPLATE_FN = 'link-template.html'
 LOG_FN = 'log.csv'
 
@@ -183,7 +183,7 @@ class Article:
             content = content.replace('POST_DATE', post_date, 1)
             content = content.replace('POST_BLURB', blurb, 1)
 
-        with open(LINK_FILE, mode='r') as link_file:
+        with open(LINK_FILE.replace('<PID>', str(self.id-1)), mode='r') as link_file:
             old_content = link_file.read()
             index = old_content.find('<article')
 
@@ -196,7 +196,7 @@ class Article:
             with open(output_path, mode='w') as new_link_file:
                 new_link_file.write(new_content)
 
-        paths = (output_path, LINK_FILE.rstrip('/'))
+        paths = (output_path, LINK_FILE.replace('<PID>', str(self.id-1)).rstrip('/'))
         self.push_files.append(paths)
 
     def write_markdown(self) -> None:
@@ -229,8 +229,8 @@ def bust_cache(blog_page, id_num):
         parsed_html = BeautifulSoup(bp.read(), features='html.parser')
 
     article_list_div = parsed_html.find(id='article-list')
-    stop = article_list_div['include-html'].find('?id=')
-    article_list_div['include-html'] = article_list_div['include-html'][:stop] + '?id=' + str(id_num)
+    stop = article_list_div['include-html'].find('.id')
+    article_list_div['include-html'] = article_list_div['include-html'][:stop] + '.id' + str(id_num) + '.html'
 
     output = Article.html_beautify(None, str(parsed_html))
 
