@@ -241,7 +241,7 @@ def bust_cache(blog_page, id_num):
     stop = article_list_div['include-html'].find('.id')
     article_list_div['include-html'] = article_list_div['include-html'][:stop] + '.id' + str(id_num) + '.html'
 
-    output = str(parsed_html)
+    output = parsed_html.prettify()
 
     with open(blog_page, mode='w') as bp:
         bp.write(output)

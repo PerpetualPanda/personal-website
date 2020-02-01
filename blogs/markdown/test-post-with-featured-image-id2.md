@@ -1,1 +1,0 @@
-Hello world! Look at this featured image! Isn't it pretty?
