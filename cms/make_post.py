@@ -132,7 +132,7 @@ class Article:
         if self.featured_image is None:
             new_featured_div = ''
         else:
-            feature_src = '/media/' + str(self.post_id) + '/' + os.path.basename(self.featured_image)
+            feature_src = 'blogs/media/' + str(self.post_id) + '/' + os.path.basename(self.featured_image)
             new_featured_div = FEATURED_DIV.replace('FEATURED_IMAGE_SRC', feature_src)
 
         with open(ARTICLE_TEMPLATE, mode='r') as template:
