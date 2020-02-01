@@ -105,7 +105,7 @@ class Article:
         """Moves blog data into proper folders, backs up old files"""
 
         post_media_dir = MEDIA_DIR.rstrip('/') + '/' + str(self.post_id)
-        if not os.path.isdir(post_media_dir) and len(self.media) > 0:
+        if not os.path.isdir(post_media_dir) and (len(self.media) > 0 or self.featured_image is not None):
             os.mkdir(post_media_dir)
 
         for push in self.push_files:
@@ -356,6 +356,7 @@ def main():
         print('Author:', post.author)
         print('Date:', post.date)
         print('Blurb:', post.blurb)
+        print('Featured Image:', post.featured_image)
         print('Media:', post.media)
         print('Length:', str(post.length) + ' words')
         print('Link:', post.link)
