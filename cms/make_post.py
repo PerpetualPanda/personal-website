@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 from shutil import copyfile
-from typing import List
-from typing import Tuple
+from typing import List, Tuple, Union
 import csv
 import datetime
 import markdown2
@@ -43,16 +42,17 @@ BeautifulSoup.prettify = prettify
 
 
 class Article:
-    def __init__(self, author: str, title: str, blurb: str, markdown: str, media: List[str]):
+    def __init__(self, author: str, title: str, blurb: str, markdown: str, featured_image: str, media: List[str]):
         self.author = author.strip()
         self.title = title.strip()
         self.blurb = blurb.strip()
         self.markdown = markdown.strip()
+        self.featured_image = featured_image
         self.media = media
 
         self.date = datetime.datetime.now()
         self.html = self.markdown_to_html(markdown)
-        self.html = self.html_beautify(self.html)
+        self.html = BeautifulSoup(self.html, 'html.parser').prettify()
         self.length, self.read_time = self.calc_length(markdown)
 
         self.post_id = self.gen_id(LOG)
@@ -77,11 +77,6 @@ class Article:
         files = os.listdir(TEMP_DIR)
         for f in files:
             os.remove(TEMP_DIR.rstrip('/') + '/' + f)
-
-    def html_beautify(self, html: str) -> str:
-        """Takes in HTML and returns beautified HTML"""
-
-        return BeautifulSoup(html, 'html.parser').prettify()
 
     def gen_filename(self, title: str) -> str:
         """Takes title and creates a valid filename"""
@@ -132,13 +127,22 @@ class Article:
             self.read_time) + ' Minute Read&nbsp; | &nbsp;'
         post_content = self.html
 
+        # Deals with featured image
+        FEATURED_DIV = '<img src="FEATURED_IMAGE_SRC" class="img-fluid" id="featured-image">'
+        if self.featured_image is None:
+            new_featured_div = ''
+        else:
+            feature_src = '/media/' + str(self.post_id) + '/' + os.path.basename(self.featured_image)
+            new_featured_div = FEATURED_DIV.replace('FEATURED_IMAGE_SRC', feature_src)
+
         with open(ARTICLE_TEMPLATE, mode='r') as template:
             content = template.read()
             content = content.replace('ARTICLE_TAB_TITLE', tab_title, 1)
             content = content.replace('ARTICLE_TITLE', title, 1)
             content = content.replace('ARTICLE_SUBTITLE', subtitle, 1)
             content = content.replace('ARTICLE_CONTENT', post_content, 1)
-            content = self.html_beautify(content)
+            content = content.replace(FEATURED_DIV, new_featured_div, 1)
+            content = BeautifulSoup(content, 'html.parser').prettify()
 
         output_path = TEMP_DIR.rstrip('/') + '/' + filename
         with open(output_path, mode='w') as article:
@@ -217,7 +221,9 @@ class Article:
         """Writes all media to temp folder"""
 
         output_path = TEMP_DIR.rstrip('/')
-        for m in self.media:
+        media = self.media[:] + [self.featured_image] if self.featured_image is not None else self.media[:]
+
+        for m in media:
             name = os.path.basename(m)
             copyfile(m, output_path + '/' + name)
 
@@ -226,7 +232,7 @@ class Article:
 
 
 def bust_cache(blog_page, id_num):
-    """Replaces ?id= query string with post id on article list"""
+    """Replaces <PID> in article list filename with id_num to circumvent browser caching"""
 
     with open(blog_page, mode='r') as bp:
         parsed_html = BeautifulSoup(bp.read(), features='html.parser')
@@ -287,6 +293,24 @@ def markdown_input(message: str) -> str:
     return text
 
 
+def featured_image_input() -> Union[str, None]:
+    """Input file path to featured image to be copied"""
+
+    featured = None
+    if yes_no('Upload featured image? (y/n): '):
+        repeat = True
+        while repeat:
+            path = confirmed_input('Enter path to media: ').strip()
+
+            if os.path.isfile(path):
+                featured = path
+                repeat = False
+            else:
+                print('Error, not a file: ' + path)
+
+    return featured
+
+
 def media_input() -> List[str]:
     """Input file paths to media to be copied"""
 
@@ -317,9 +341,10 @@ def main():
         title = confirmed_input('Enter title: ').strip()
         blurb = confirmed_input('Enter blurb: ').strip()
         content = markdown_input('Enter markdown content below:').strip()
+        featured = featured_image_input()
         media = media_input()
 
-        post = Article(name, title, blurb, content, media)
+        post = Article(name, title, blurb, content, featured, media)
         post.write_markdown()
         post.write_article()
         post.write_media()
