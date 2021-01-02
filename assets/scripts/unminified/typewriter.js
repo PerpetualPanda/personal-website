@@ -7,7 +7,7 @@ setTimeout(function() {
   i = 0,
   isTag,
   text,
-  cursor = "█",
+  cursor = "_",
   timer;
 
   (function type() {
@@ -18,15 +18,14 @@ setTimeout(function() {
       return;
     }
     $('.typewriter').html(text + " " + cursor);
-    timer = setTimeout(type, 40);
+    timer = setTimeout(type, 20);
   }());
   
   function blink() {
     i++;
     const foo = str + " " + (i%2 ? cursor : '');
     $('.typewriter').html(foo);
-    if (i < 10) timer = setTimeout(blink, 600);
-    else fade();
+    timer = setTimeout(blink, 600);
   }
   
   function fade() {
