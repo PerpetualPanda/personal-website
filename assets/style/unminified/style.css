@@ -145,7 +145,6 @@ body {
 
 #terminal-buttons {
     float: left;
-    display: inline-block;
     padding-top: 6px
 }
 
@@ -154,7 +153,10 @@ body {
 }
 
 #terminal-textcontainer {
-    padding: 20pt
+    padding-top: 20pt;
+	padding-right: 0pt;
+	padding-bottom: 20pt;
+	padding-left: 20pt;
 }
 
 #terminal-titlebar {
@@ -165,8 +167,7 @@ body {
 }
 
 #terminal-titletext {
-    float: center;
-    display: inline-block
+    float: center
 }
 
 /* Font Awesome Social Icons */
@@ -194,18 +195,4 @@ body {
 .fa-linkedin {
     background: #007bb5;
     color: white
-}
-
-.fa-youtube {
-    background: #ff0000; 
-    color: white
-}
-
-.fa-instagram {
-    background: #f09433; 
-    color: white;
-    background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
-    background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
-    background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 )
 }
