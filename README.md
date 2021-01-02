@@ -1,14 +1,12 @@
 # Personal Website
 
-This is a personal website I initially wrote while pulling my first all-nighter in college (couldn't sleep because
-I had an energy drink). It's currently hosted on Berkeley's Open Computing Facility server and on my GitHub Pages.
-The site is designed to allow for it to be easily repurposed as a template (see instructions below). To make blog
-posts, the `make_post.py` Python script can be used to automatically convert markdown inputs to blog pages.
+This is a personal website I initially wrote from scratch. It's currently hosted on my GitHub Pages. The site
+is designed to allow for easy repurposing as a template (see instructions below). To make blog posts, the
+`make_post.py` Python script can be used to automatically convert markdown inputs to blog pages.
 
-* OCF Link: https://ocf.io/jmo
-* Github Pages Link: http://yuzhoumo.github.io/
+* Link: https://joe-mo.com
 
-## Using the site as a template
+## Using this site as a template
 
 **Change the following files located in** `assets/includes` **to customize page content:**
 
@@ -26,7 +24,7 @@ posts, the `make_post.py` Python script can be used to automatically convert mar
 | blog-pre-footer.html    | Adds html to the bottom of all articles    |
 | blog-quote.html         | Adds blockquote to the top of blog.html    |
 
-Note: Any script tags imported from includes are ignored (presumably to prevent XSS attacks), so scripts must be
+Note: Any script tags imported from includes are ignored (because of XSS security policies), so scripts must be
 directly added to each page.
 
 **Follow these instructions to customize other elements:**
