@@ -183,7 +183,8 @@ body {
 }
 
 .fa:hover {
-    opacity: 0.8;
+	color: white;
+    opacity: 0.5;
     text-decoration: none
 }
 
@@ -197,7 +198,7 @@ body {
     color: white
 }
 
-.fa-file-alt {
+.fa-file-text {
     background: #3C4144;
     color: white
 }
