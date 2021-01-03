@@ -50,6 +50,22 @@ body {
     background-color: #1e1e1e
 }
 
+/* Dark theme Override */
+
+.card {
+	color: #bebebe;
+	background-color: #191919;
+	border-color: #404040
+}
+
+.card-header,
+.card-footer {
+	color: #bebebe;
+	background-color: #252525;
+	border-top-color: #404040;
+	border-bottom-color: #404040
+}
+
 /* Classes */
 
 .card-deck {
