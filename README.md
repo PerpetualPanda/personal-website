@@ -38,4 +38,4 @@ directly added to each page.
 
 Blog posts can be automated by running `sync.py` from the `cms` folder. It will automatically generate html files for
 all markdown articles in `cms/markdown` and replace the existing content in `/posts`. Posts are given ids by date. To
-generate a starter file for markdown articles, run `generate_starter.py`.
+generate a starter file for markdown articles, run `starter.py`.
