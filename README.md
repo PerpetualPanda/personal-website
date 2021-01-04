@@ -18,7 +18,6 @@ is designed to allow for easy repurposing as a template (see instructions below)
 | terminal-data.html      | Change the terminal text on all pages      |
 | about-main.html         | Main section of home page                  |
 | project-tabs.html       | Tabs and tab content of projects page      |
-| article-list.html       | Links to posts that appear on blog.html    |
 | blog-content-head.html  | Adds html to the top of all articles       |
 | blog-content-sub.html   | Adds html to the subtitles of all articles |
 | blog-pre-footer.html    | Adds html to the bottom of all articles    |
@@ -37,8 +36,6 @@ directly added to each page.
 
 ## Creating blog posts
 
-Blog posts can be automated by running `make_post.py` from the `cms` folder. Simply input your post in markdown and
-specify the paths or links to any media you included in your post. It will automatically update `article-list.html`,
-add your markdown to the `blogs/markdown` directory, and add your post to the `blogs` folder after converting it to
-HTML and beautifying it. All posts are given a chronological ID (starting from 1) and added to `_post-log.csv`. The
-CSV file logs all of the metadata for each post (ID, date, title, length, and post link).
+Blog posts can be automated by running `sync.py` from the `cms` folder. It will automatically generate html files for
+all markdown articles in `cms/markdown` and replace the existing content in `/posts`. Posts are given ids by date. To
+generate a starter file for markdown articles, run `generate_starter.py`.
