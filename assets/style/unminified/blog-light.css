@@ -36,3 +36,26 @@ body {
 .jumbo-section {
     background-color:white
 }
+
+code {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 1px 2px
+}
+
+pre code {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-top: 1em;
+    overflow: auto;
+    padding: 10px 15px;
+    display: block;
+    word-wrap: break-word
+}

@@ -17,13 +17,9 @@ generateResolvConf = false</code></pre></li>
 <li>Create another file: <code>/etc/resolv.conf</code>, replacing it if it already exists.</li>
 <li>It should have the following contents:
 <pre class="highlight"><code>nameserver YOUR_DNS_SERVER_HERE</code></pre></li>
-<li>
-<p>Repeat step 3. Now WSL2 should be using the DNS server you've specified!</p>
-</li>
-<li>
+<li>Repeat step 3. Now WSL2 should be using the DNS server you've specified!</li>
+</ol>
 <p>Note: For step 5, replace <code>YOUR_DNS_SERVER_HERE</code> with your desired DNS server. I like to use
 <a href="https://adguard.com/en/adguard-dns/overview.html#instruction">Adguard DNS servers</a>, but some other options are
 <code>8.8.8.8</code> for Google DNS, <code>1.1.1.1</code> for CloudFlare DNS, and <code>45.90.28.192</code> for NextDNS.</p>
-</li>
-</ol>
 <p>Credit: <a href="https://github.com/microsoft/WSL/issues/4285#issuecomment-522201021">https://github.com/microsoft/WSL/issues/4285#issuecomment-522201021</a></p></div><div include-html="../assets/includes/blog-pre-footer.html" id="blog-pre-footer"></div></div></div><button class="btn btn-primary btn-circle" type="button" href="" id="scroll-to-top"> <i class="fa fa-chevron-up" style="font-size: 32px; text-align: center; margin-top: 3px"></i> <script src="../assets/scripts/scrollToTop.js"></script> </button> <footer class="footer-text" id="article-footer"> <p style="display:inline-block">Copyright &copy; <script>document.write(new Date().getFullYear())</script></p><p style="display:inline-block" include-html="../assets/includes/footer.html"></p></footer> <script>includeHTML();</script></body></html>

@@ -34,7 +34,8 @@ nameserver YOUR_DNS_SERVER_HERE
 ```
 6. Repeat step 3. Now WSL2 should be using the DNS server you've specified!
 
-* Note: For step 5, replace `YOUR_DNS_SERVER_HERE` with your desired DNS server. I like to use
+
+Note: For step 5, replace `YOUR_DNS_SERVER_HERE` with your desired DNS server. I like to use
 [Adguard DNS servers](https://adguard.com/en/adguard-dns/overview.html#instruction), but some other options are
 `8.8.8.8` for Google DNS, `1.1.1.1` for CloudFlare DNS, and `45.90.28.192` for NextDNS.
 
