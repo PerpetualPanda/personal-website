@@ -15,7 +15,7 @@
     <div include-html="../assets/includes/blog-head.html"></div>
 
     <!-- TAB TITLE -->
-    <title>ARTICLE_TAB_TITLE</title>
+    <title>{ARTICLE_TAB_TITLE}</title>
 </head>
 
 <body>
@@ -47,19 +47,19 @@
 
             <!-- FEATURED IMAGE -->
             <div style="width:100%; text-align: center">
-                <img src="FEATURED_IMAGE_SRC" class="img-fluid" id="featured-image">
+                <img src="{FEATURED_IMAGE_SRC}" class="img-fluid" id="featured-image">
             </div>
 
             <!-- BLOG TITLE/SUBTITLE -->
             <h1 id="blog-title">
-				ARTICLE_TITLE
+				{ARTICLE_TITLE}
 			</h1>
 
             <!-- Include: blog-content-sub.html -->
             <div include-html="../assets/includes/blog-content-sub.html" style="display: inline-block" id="blog-content-sub"></div>
 
             <h5 style="display: inline-block" id="blog-subtitle">
-				ARTICLE_SUBTITLE
+				{ARTICLE_SUBTITLE}
 			</h5>
             
             <!-- Theme Toggle Switch -->
@@ -71,7 +71,7 @@
 
             <!-- BLOG CONTENT -->
             <div id="blog-content">
-				ARTICLE_CONTENT
+				{ARTICLE_CONTENT}
 			</div>
 
             <!-- Include: blog-pre-footer.html -->
