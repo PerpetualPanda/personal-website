@@ -66,7 +66,7 @@ def read_markdown(markdown_file):
     with open(markdown_file) as md:
         raw = md.read().strip()
 
-    pattern = r'title:(.+)\nauthor:(.+)\ndate:(.+)\nimage:(.+)\nblurb:(.+)\npermalink:(.+)\n((\s|.)+)'
+    pattern = r'title:(.+)\nauthor:(.+)\ndate:(.+)\nimage:(.+?)\nblurb:(.+)\npermalink:(.+)\n((\s|.)+)'
     matches = re.match(pattern, raw)
 
     assert matches, 'A post is improperly formatted: ' + markdown_file
