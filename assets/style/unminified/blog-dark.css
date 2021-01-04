@@ -3,15 +3,15 @@ body {
 }
 
 #blog-title {
-    color: white
+    color: #D0F5EF
 }
 
 #blog-subtitle {
-    color: white
+    color: #D0F5EF
 }
 
 #blog-content {
-    color: white
+    color: #D0F5EF
 }
 
 #blog-content a {
@@ -27,7 +27,7 @@ body {
 }
 
 #dark-toggle-label {
-    color: white
+    color: #D0F5EF
 }
 
 .footer-text {

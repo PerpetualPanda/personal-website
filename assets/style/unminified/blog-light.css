@@ -1,22 +1,22 @@
 body {
-    background-color: lightgray;
+    background-color:lightgray;
     font-size: 110%
 }
 
 #blog-title {
-    color: black
+    color: #1F2023
 }
 
 #blog-subtitle {
-    color: black
+    color: #1F2023
 }
 
 #dark-toggle-label {
-    color: black
+    color: #1F2023
 }
 
 #blog-content {
-    color: black
+    color :#1F2023
 }
 
 #blog-main-jumbotron {
@@ -28,13 +28,13 @@ body {
 }
 
 .footer-text {
-    color:#555555;
+    color: #555555;
     font-size: 10pt;
     text-align: center
 }
 
 .jumbo-section {
-    background-color:white
+    background-color: white
 }
 
 code {
