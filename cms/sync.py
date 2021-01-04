@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-import markdown2
+import markdown
 import os
 import re
 
@@ -37,15 +37,15 @@ def generate_article_html(article, template):
                str(round(article['wordcount'] / 200)) + \
                ' Minute Read | '
 
-    template = template.format(
+    page = template.format(
         ARTICLE_TAB_TITLE = article['title'] + ' - ' + article['author'],
         ARTICLE_TITLE = article['title'],
         ARTICLE_SUBTITLE = subtitle,
-        ARTICLE_CONTENT = markdown2.markdown(article['content']),
+        ARTICLE_CONTENT = markdown.markdown(article['content'], extensions=['pymdownx.superfences']),
         FEATURED_IMAGE_SRC = article['image']
     )
 
-    return BeautifulSoup(template, 'html.parser').prettify()
+    return page
 
 
 def generate_link_html(article, template, id_num):
