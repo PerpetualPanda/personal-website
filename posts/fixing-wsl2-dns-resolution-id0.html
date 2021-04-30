@@ -9,14 +9,17 @@ my DNS queries will fail to resolve at all while I have active VPN connections. 
 below for my own future reference and anyone else who might be having this same issue:</p>
 <ol>
 <li>Create a file at the following location: 
-<pre class="highlight"><code>/etc/wsl.conf</code></pre></li>
+<div class="highlight"><pre><span></span><code>/etc/wsl.conf
+</code></pre></div></li>
 <li>It should have the following contents:
-<pre class="highlight"><code>[network]
-generateResolvConf = false</code></pre></li>
+<div class="highlight"><pre><span></span><code>[network]
+generateResolvConf = false
+</code></pre></div></li>
 <li>Run <code>wsl --shutdown</code> in a <code>cmd</code> window and restart WSL2.</li>
 <li>Create another file: <code>/etc/resolv.conf</code>, replacing it if it already exists.</li>
 <li>It should have the following contents:
-<pre class="highlight"><code>nameserver YOUR_DNS_SERVER_HERE</code></pre></li>
+<div class="highlight"><pre><span></span><code>nameserver YOUR_DNS_SERVER_HERE
+</code></pre></div></li>
 <li>Repeat step 3. Now WSL2 should be using the DNS server you've specified!</li>
 </ol>
 <p>Note: For step 5, replace <code>YOUR_DNS_SERVER_HERE</code> with your desired DNS server. I like to use

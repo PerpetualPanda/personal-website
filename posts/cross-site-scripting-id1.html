@@ -1,0 +1,40 @@
+<!DOCTYPE HTML><html lang="en"><head> <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script> <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script> <script src="../assets/scripts/include.js"></script> <link rel="shortcut icon" type="image/png" href="../assets/img/icons/favicon.png"> <div include-html="../assets/includes/blog-head.html"></div><title>Stored vs Reflected XSS - Joe Mo</title></head><body> <h1 style="text-align: center" id="enabled-js-message">Please enable JavaScript to properly view this website.</h1> <script id="enabled-js-script">document.getElementById("enabled-js-message").remove();</script> <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> <a class="navbar-brand" href="/" style="font-size: 12pt"> <img width="32px" src="../assets/img/icons/logo.png"> </a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button> <div class="collapse navbar-collapse" id="navbarSupportedContent" include-html="../assets/includes/nav-links.html"></div></nav> <div class="container"> <div class="jumbotron jumbo-section" id="blog-main-jumbotron"> <div include-html="../assets/includes/blog-content-head.html" id="blog-content-head"></div><div style="width:100%; text-align: center"> <img src="" class="img-fluid" id="featured-image"> </div><h1 id="blog-title">Stored vs Reflected XSS</h1> <div include-html="../assets/includes/blog-content-sub.html" style="display: inline-block" id="blog-content-sub"></div><h5 style="display: inline-block" id="blog-subtitle">Joe Mo | April 29, 2021 | 3 Minute Read | </h5> <div class="custom-control custom-switch" style="display: inline-block"> <input type="checkbox" class="custom-control-input" id="dark-toggle"> <label class="custom-control-label" for="dark-toggle" id="dark-toggle-label">Light Theme</label> <script src="../assets/scripts/blogThemeToggle.js"></script> </div><br><br><div id="blog-content"><p>In cross site scripting vulnerabilities, the user of a website executes malicious JavaScript code injected by an attacker. This article is a beginner friendly explanation of two major categories of XSS (Cross Site Scripting) vulnerabilities: "Reflected XSS" and "Stored XSS".</p>
+<h2>How XSS Works</h2>
+<p>HTML uses tags to denote denote page layout. For instance, <code>&lt;p&gt;&lt;/p&gt;</code> tags indicate plain text. XSS takes advantage of inline scripting, where any HTML content surrounded by <code>&lt;script&gt;&lt;/script&gt;</code> tags are interpreted as Javascript code and executed. This means that if attackers are able to insert raw HTML into a page that a user is visiting, they can use that power to insert script tags and get a user to run their malicious code.</p>
+<h2>Reflected XSS</h2>
+<p>Many sites use URL query parameters to pass information from the user to a remote server. Consider the following URL:</p>
+<p><code>https://www.google.com/search?q=helloworld</code></p>
+<p>This link takes you to a Google search for <code>helloworld</code>. Everything after the <code>?</code> is data that we want to send to Google, namely <code>q=helloworld</code>. This conveys that our query <code>q</code> will be sent to Google with the value <code>helloworld</code>.</p>
+<p>In reflected XSS, an attacker might take advantage of this fact by sending the server a malicious query. This link could contain malicious Javascript code that could be executed by a vulnerable site. If the attacker sends this link to an unsuspecting user and gets that person to click on it, then the attacker's malicious code will execute when the user visits the URL.</p>
+<p>Consider the following example. Say a website has a vulnerable search endpoint:</p>
+<p><code>https://vulnerable-site.com/search?q=helloworld</code></p>
+<p>Unlike <code>google.com</code>, our vulnerable website returns a page that looks like this:</p>
+<div class="highlight"><pre><span></span><code>&lt;h1&gt;Search&lt;/h1&gt;
+&lt;h3&gt;Search results for helloworld&lt;/h3&gt;
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td&gt;No results!&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+</code></pre></div>
+<p>It simply takes whatever value <code>q</code> is set to and puts it directly into the webpage after "Search results for".</p>
+<p>Notice how the vulnerable site just injects <code>helloworld</code> directly into the page. Now imagine if the attacker had created a link that looked like this:</p>
+<p><code>https://vulnerable-site.com/search?q=&lt;script&gt;EVIL_CODE&lt;/script&gt;</code></p>
+<p>If the attacker gets a user to click on this link, the result page would look something like this:</p>
+<div class="highlight"><pre><span></span><code>&lt;h1&gt;Search&lt;/h1&gt;
+&lt;h3&gt;Search results for &lt;script&gt;EVIL_CODE&lt;/script&gt;&lt;/h3&gt;
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td&gt;No results!&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+</code></pre></div>
+<p>In this example <code>EVIL_CODE</code> is just a placeholder, but this vulnerability allows the attacker to inject any Javascript code into the website.</p>
+<h2>Stored XSS</h2>
+<p>Stored XSS is similar to reflected XSS with the exception that the malicious Javascript is stored on the server permanently. Say we have a vulnerable API enpoint:</p>
+<p><code>https://vulnerable-site.com/post?content=helloworld</code></p>
+<p>Let's say that this enpoint takes whatever value is stored in <code>content</code> and makes a Twitter style post on the site with that content. Instead of sending a link to the victim, say the the attacker logs in and makes his malicious post using the following url (which is stored in the website's database):</p>
+<p><code>https://vulnerable-site.com/post?content=&lt;script&gt;EVIL_CODE&lt;/script&gt;</code></p>
+<p>If the site inserts the content as raw HTML, then the malicious Javascript is loaded when any user views that post.</p>
+<h2>Terminology</h2>
+<p>In many cases, we can actually have XSS attacks that are really a mix of reflected and stored XSS (and even a third category called "DOM Based XSS"). If you are interested in learning more about this, OWASP (Open Web Application Security Project) has a really nice article on it linked <a href="https://owasp.org/www-community/Types_of_Cross-Site_Scripting">here</a>.</p></div><div include-html="../assets/includes/blog-pre-footer.html" id="blog-pre-footer"></div></div></div><button class="btn btn-primary btn-circle" type="button" href="" id="scroll-to-top"> <i class="fa fa-chevron-up" style="font-size: 32px; text-align: center; margin-top: 3px"></i> <script src="../assets/scripts/scrollToTop.js"></script> </button> <footer class="footer-text" id="article-footer"> <p style="display:inline-block">Copyright &copy; <script>document.write(new Date().getFullYear())</script></p><p style="display:inline-block" include-html="../assets/includes/footer.html"></p></footer> <script>includeHTML();</script></body></html>
