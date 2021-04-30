@@ -106,7 +106,7 @@ def convert_date(article):
 
     date = article['date']
 
-    m = re.match(r'([A-Za-z]+)\s*(\d),\s*(\d)', date)
+    m = re.match(r'([A-Za-z]+)\s*(\d)+,\s*(\d)+', date)
     assert m, 'Article has malformed date: ' + str(article)
 
     return int(m.group(3)), mappings[m.group(1).lower()], int(m.group(2))
